@@ -125,15 +125,17 @@
     .candle-box {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 14px;
-      margin: 26px 0 22px;
+      max-width: 460px;
+      margin: 26px auto 22px;
       align-items: flex-end;
     }
 
     .candle {
       position: relative;
-      width: 26px;
-      height: 80px;
+      width: 22px;
+      height: 70px;
       border-radius: 8px 8px 5px 5px;
       background: repeating-linear-gradient(
         45deg,
@@ -149,14 +151,14 @@
     .candle::before {
       content: "";
       position: absolute;
-      top: -22px;
+      top: -18px;
       left: 50%;
       transform: translateX(-50%);
-      width: 12px;
-      height: 18px;
+      width: 10px;
+      height: 16px;
       background: radial-gradient(ellipse at 50% 35%, #fff5b0 12%, #ff9f1c 48%, transparent 70%);
       border-radius: 50% 50% 40% 40%;
-      box-shadow: 0 0 18px 6px rgba(255, 180, 70, 0.6);
+      box-shadow: 0 0 16px 5px rgba(255, 180, 70, 0.6);
       animation: flicker 0.8s ease-in-out infinite alternate;
     }
 
@@ -170,10 +172,25 @@
       50% { transform: rotate(2deg); }
     }
 
-    .candle:nth-child(2) { --candy: #ff9f9f; animation-delay: -0.6s; }
-    .candle:nth-child(3) { --candy: #ffd166; animation-delay: -1.2s; }
-    .candle:nth-child(4) { --candy: #7ae0c3; animation-delay: -1.8s; }
-    .candle:nth-child(5) { --candy: #b6b6ff; animation-delay: -2.4s; }
+    .candle:nth-child(2) { --c1: #ff9f9f; animation-delay: -0.6s; }
+    .candle:nth-child(3) { --c1: #ffd166; animation-delay: -1.2s; }
+    .candle:nth-child(4) { --c1: #7ae0c3; animation-delay: -1.8s; }
+    .candle:nth-child(5) { --c1: #b6b6ff; animation-delay: -2.4s; }
+    .candle:nth-child(6) { --c1: #ffb3c6; animation-delay: -3.0s; }
+    .candle:nth-child(7) { --c1: #ff9f9f; animation-delay: -3.6s; }
+    .candle:nth-child(8) { --c1: #ffd166; animation-delay: -4.2s; }
+    .candle:nth-child(9) { --c1: #7ae0c3; animation-delay: -4.8s; }
+    .candle:nth-child(10) { --c1: #b6b6ff; animation-delay: -5.4s; }
+    .candle:nth-child(11) { --c1: #ffb3c6; animation-delay: -6.0s; }
+    .candle:nth-child(12) { --c1: #ff9f9f; animation-delay: -6.6s; }
+    .candle:nth-child(13) { --c1: #ffd166; animation-delay: -7.2s; }
+    .candle:nth-child(14) { --c1: #7ae0c3; animation-delay: -7.8s; }
+    .candle:nth-child(15) { --c1: #b6b6ff; animation-delay: -8.4s; }
+    .candle:nth-child(16) { --c1: #ffb3c6; animation-delay: -9.0s; }
+    .candle:nth-child(17) { --c1: #ff9f9f; animation-delay: -9.6s; }
+    .candle:nth-child(18) { --c1: #ffd166; animation-delay: -10.2s; }
+    .candle:nth-child(19) { --c1: #7ae0c3; animation-delay: -10.8s; }
+    .candle:nth-child(20) { --c1: #b6b6ff; animation-delay: -11.4s; }
 
     .actions {
       display: flex;
@@ -240,7 +257,7 @@
   <main class="card">
     <div class="emoji-banner" role="img" aria-label="生日蛋糕">🎂</div>
     <h1 class="name">康思义</h1>
-    <div class="subtitle">生日快乐！</div>
+    <div class="subtitle">20 岁生日快乐！</div>
     <p class="message">
       愿你今天的每一口蛋糕都是甜的，<br />
       明天的每一个愿望都慢慢实现。<br />
@@ -250,6 +267,21 @@
     </p>
 
     <div class="candle-box">
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
       <div class="candle"></div>
       <div class="candle"></div>
       <div class="candle"></div>
