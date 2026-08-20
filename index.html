@@ -209,6 +209,8 @@
       padding: 13px 26px;
       border-radius: 999px;
       transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-block;
     }
 
     button:active {
@@ -247,6 +249,58 @@
     @media (max-width: 480px) {
       .card { padding: 32px 18px 28px; }
       .message { font-size: 15px; }
+    }
+
+    .gift {
+      margin: 4px auto 24px;
+      max-width: 480px;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 244, 214, 0.92), rgba(255, 219, 220, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 28px rgba(120, 40, 60, 0.12);
+      position: relative;
+    }
+
+    .gift-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #7a3b3b;
+      margin-bottom: 6px;
+    }
+
+    .gift-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #8a5a5a;
+      margin-bottom: 12px;
+    }
+
+    .gift-code {
+      display: inline-block;
+      font-size: 13px;
+      background: rgba(122, 59, 59, 0.08);
+      border-radius: 10px;
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+
+    .gift-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn-steam {
+      color: #fff;
+      background: linear-gradient(120deg, #1b2838, #2a475e);
+      box-shadow: 0 10px 22px rgba(27, 40, 56, 0.28);
+    }
+
+    .btn-steam:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(27, 40, 56, 0.36);
     }
   </style>
 </head>
@@ -295,6 +349,19 @@
       <button class="btn-primary" id="music-btn" type="button">🎵 播放生日歌</button>
       <button class="btn-ghost" id="confetti-btn" type="button">🎉 撒花</button>
     </div>
+
+    <section class="gift" id="gift-section">
+      <div class="gift-title">🎁 生日礼物 · Steam</div>
+      <p class="gift-desc">
+        还没想好买哪款的话，这里帮你铺好了路：<br />
+        先加上我的 Steam 好友，我再把礼物直接送过去！
+      </p>
+      <div class="gift-code">🎮 游戏：桌游模拟器（Tabletop Simulator）</div>
+      <div class="gift-links">
+        <a class="btn-steam button" href="https://store.steampowered.com/app/286160/Tabletop_Simulator/" target="_blank" rel="noopener noreferrer">🛒 商店页</a>
+        <a class="btn-steam button" href="https://s.team/p/tts" target="_blank" rel="noopener noreferrer">🔗 Steam 邀请链接</a>
+      </div>
+    </section>
 
     <div class="date" id="date-line"></div>
   </main>
