@@ -352,12 +352,12 @@
       <div class="gift-title">🎁 生日礼物 · Steam</div>
       <p class="gift-desc">
         桌游模拟器（Tabletop Simulator）。<br />
-        点商店页看看，合胃口的话直接加我 Steam，我来买。
+        好友已经加好了，我直接去 Steam 下单送你。
       </p>
       <div class="gift-code">🎮 桌游模拟器 · Tabletop Simulator</div>
       <div class="gift-links">
         <a class="btn-steam button" href="https://store.steampowered.com/app/286160/Tabletop_Simulator/" target="_blank" rel="noopener noreferrer">🛒 商店页</a>
-        <a class="btn-steam button" href="https://s.team/p/tts" target="_blank" rel="noopener noreferrer">➕ 加我 Steam</a>
+        <button class="btn-steam button" id="gift-sent-button" type="button">🎁 礼物已送出</button>
       </div>
     </section>
 
@@ -528,6 +528,15 @@
       this.textContent = '🎶 正在播放…';
       playBirthdaySong();
     });
+
+    const giftSentBtn = document.getElementById('gift-sent-button');
+    if (giftSentBtn) {
+      giftSentBtn.addEventListener('click', function () {
+        burst();
+        this.textContent = '✅ 已送出';
+        this.disabled = true;
+      });
+    }
   </script>
 </body>
 </html>
