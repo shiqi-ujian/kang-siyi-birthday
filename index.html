@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="康思义生日快乐纪念网页" />
+  <title>康思义 · 生日快乐</title>
+  <style>
+    :root {
+      --pink: #ff8fab;
+      --deep-pink: #ff2e88;
+      --cream: #fff8f0;
+      --warm: #ffb677;
+      --gold: #f9c74f;
+      --ink: #5a3d3d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 45%, #ffb88c 100%);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    /* 柔和飘动的小星星和爱心背景 */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-decor span {
+      position: absolute;
+      bottom: -10vh;
+      animation: floatUp linear infinite;
+      opacity: 0.5;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-120vh) rotate(360deg); }
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(680px, 100%);
+      background: rgba(255, 250, 245, 0.86);
+      backdrop-filter: blur(10px);
+      border-radius: 32px;
+      box-shadow: 0 24px 70px rgba(120, 40, 60, 0.30);
+      padding: 48px 36px 40px;
+      text-align: center;
+      animation: popIn 0.9s cubic-bezier(.2, 1.2, .3, 1) both;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .emoji-banner {
+      font-size: clamp(48px, 10vw, 78px);
+      line-height: 1;
+      margin-bottom: 8px;
+      animation: bounce 2.4s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .name {
+      font-size: clamp(44px, 9vw, 68px);
+      font-weight: 900;
+      background: linear-gradient(120deg, var(--deep-pink), var(--warm));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 6px;
+      margin: 6px 0 4px;
+    }
+
+    .subtitle {
+      font-size: clamp(26px, 6vw, 40px);
+      font-weight: 700;
+      color: var(--deep-pink);
+      margin-bottom: 18px;
+    }
+
+    .message {
+      max-width: 480px;
+      margin: 0 auto 26px;
+      font-size: 17px;
+      line-height: 1.9;
+      color: #6d4a4a;
+    }
+
+    .candle-box {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 26px 0 22px;
+      align-items: flex-end;
+    }
+
+    .candle {
+      position: relative;
+      width: 26px;
+      height: 80px;
+      border-radius: 8px 8px 5px 5px;
+      background: repeating-linear-gradient(
+        45deg,
+        var(--c1, #ffb3c6),
+        var(--c1, #ffb3c6) 6px,
+        #ffffff 6px,
+        #ffffff 10px
+      );
+      box-shadow: inset -4px 0 8px rgba(0,0,0,0.08);
+      animation: candleSway 3s ease-in-out infinite;
+    }
+
+    .candle::before {
+      content: "";
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 18px;
+      background: radial-gradient(ellipse at 50% 35%, #fff5b0 12%, #ff9f1c 48%, transparent 70%);
+      border-radius: 50% 50% 40% 40%;
+      box-shadow: 0 0 18px 6px rgba(255, 180, 70, 0.6);
+      animation: flicker 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); opacity: 0.95; }
+      100% { transform: translateX(-50%) scale(1.08); opacity: 1; }
+    }
+
+    @keyframes candleWish {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    .candle:nth-child(2) { --candy: #ff9f9f; animation-delay: -0.6s; }
+    .candle:nth-child(3) { --candy: #ffd166; animation-delay: -1.2s; }
+    .candle:nth-child(4) { --candy: #7ae0c3; animation-delay: -1.8s; }
+    .candle:nth-child(5) { --candy: #b6b6ff; animation-delay: -2.4s; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      padding: 13px 26px;
+      border-radius: 999px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(120deg, var(--deep-pink), #ff6b7a);
+      box-shadow: 0 12px 26px rgba(255,46,136,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(255,46,136,0.42);
+    }
+
+    .btn-ghost {
+      color: var(--deep-pink);
+      background: rgba(255, 226, 229, 0.9);
+      box-shadow: 0 8px 18px rgba(180, 50, 80, 0.12);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 214, 219, 0.95);
+    }
+
+    .date {
+      margin-top: 28px;
+      font-size: 14px;
+      color: #a07979;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 18px 28px; }
+      .message { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decor" aria-hidden="true"></div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <main class="card">
+    <div class="emoji-banner" role="img" aria-label="生日蛋糕">🎂</div>
+    <h1 class="name">康思义</h1>
+    <div class="subtitle">生日快乐！</div>
+    <p class="message">
+      愿你今天的每一口蛋糕都是甜的，<br />
+      明天的每一个愿望都慢慢实现。<br />
+      岁岁常欢愉，年年皆胜意。<br />
+      <br />
+      —— 来自一直记得你的朋友 💛
+    </p>
+
+    <div class="candle-box">
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="music-btn" type="button">🎵 播放生日歌</button>
+      <button class="btn-ghost" id="confetti-btn" type="button">🎉 撒花</button>
+    </div>
+
+    <div class="date" id="date-line"></div>
+  </main>
+
+  <script>
+    // 背景飘动装饰
+    (function decor() {
+      const container = document.querySelector('.bg-decor');
+      const symbols = ['🎈', '🎀', '✨', '💖', '⭐', '🎊'];
+      for (let i = 0; i < 18; i++) {
+        const span = document.createElement('span');
+        span.textContent = symbols[i % symbols.length];
+        span.style.left = Math.random() * 100 + '%';
+        span.style.fontSize = 18 + Math.random() * 30 + 'px';
+        span.style.animationDuration = 8 + Math.random() * 10 + 's';
+        span.style.animationDelay = -Math.random() * 15 + 's';
+        container.appendChild(span);
+      }
+    })();
+
+    // 当前日期
+    (function renderDate() {
+      const now = new Date();
+      const text = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 · 纪念日';
+      document.getElementById('date-line').textContent = text;
+    })();
+
+    // 彩带粒子
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    let running = false;
+
+    const COLORS = ['#ff2e88', '#ffb677', '#fbb74f', '#56cfae', '#6aa7ff', '#ffffff'];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function randomConfetti() {
+      const size = 7 + Math.random() * 7;
+      return {
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * canvas.height * 0.3,
+        w: size,
+        h: size * (0.5 + Math.random()),
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        vy: 2 + Math.random() * 4,
+        vx: -1 + Math.random() * 2,
+        angle: Math.random() * Math.PI * 2,
+        spin: -0.1 + Math.random() * 0.2,
+        opacity: Math.random() * 0.6 + 0.4,
+        life: 1
+      };
+    }
+
+    function burst() {
+      for (let i = 0; i < 120; i++) {
+        particles.push(randomConfetti());
+      }
+      runAnimation();
+    }
+
+    let rafId = null;
+
+    function runAnimation() {
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+      return true;
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.angle += p.spin;
+        p.vy += 0.02;
+        p.life -= 0.003;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.life) * p.opacity;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+
+        if (p.life <= 0 || p.y > canvas.height + 40) {
+          particles.splice(i, 1);
+        }
+      }
+
+      if (particles.length > 0) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    document.getElementById('confetti-btn').addEventListener('click', burst);
+
+    // 用 Web Audio 播放《祝你生日快乐》主旋律
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    let isPlaying = false;
+
+    // 音高频率表（C 大调）
+    const NOTE_FREQ = {
+      'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+      'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25
+    };
+
+    // 简谱：Happy Birthday 的前两句（6/8 拍简化处理）
+    const MELODY = [
+      ['G4', 0.75], ['G4', 0.25], ['A4', 1], ['G4', 1], ['C5', 1], ['B4', 2],
+      ['G4', 0.75], ['G4', 0.25], ['A4', 1], ['G4', 1], ['D5', 1], ['C5', 2],
+      ['G4', 0.75], ['G4', 0.25], ['G5', 1], ['E5', 1], ['C5', 1], ['B4', 1], ['A4', 2],
+      ['F5', 0.75], ['F5', 0.25], ['E5', 1], ['C5', 1], ['D5', 1], ['C5', 2]
+    ];
+
+    function playTone(freq, duration = 1) {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const now = audioCtx.currentTime;
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      oscillator.type = 'triangle';
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      oscillator.frequency.value = freq;
+      oscillator.start(now);
+      oscillator.stop(now + duration + 0.05);
+    }
+
+    function playBirthdaySong() {
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      let cursor = 0;
+      MELODY.forEach(([note, beats], index) => {
+        setTimeout(() => {
+          const freq = NOTE_FREQ[note];
+          if (freq) playTone(freq, beats * 0.38 + 0.15);
+        }, cursor * 1000);
+        cursor += beats * 0.38 + 0.15;
+      });
+
+      // 播完后撒一波彩带
+      const totalMs = (cursor + 0.4) * 1000;
+      setTimeout(() => {
+        burst();
+        isPlaying = false;
+        document.getElementById('music-btn').textContent = '🎵 播放生日歌';
+      }, totalMs);
+    }
+
+    document.getElementById('music-btn').addEventListener('click', function () {
+      if (isPlaying) return;
+      isPlaying = true;
+      this.textContent = '🎶 正在播放…';
+      playBirthdaySong();
+    });
+  </script>
+</body>
+</html>

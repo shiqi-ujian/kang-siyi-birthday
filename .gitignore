@@ -1,0 +1,4 @@
+# gitignore for a simple static birthday page
+node_modules/
+.DS_Store
+Thumbs.db
